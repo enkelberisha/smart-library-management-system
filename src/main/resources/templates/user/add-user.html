@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New User - Admin</title>
+
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/user-add.css}">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>Add New User</h2>
+        <p>Create a new account for library access</p>
+    </div>
+
+    <div class="auth-body">
+        <div class="user-add-wrapper">
+            <div class="user-add-card">
+                <div class="user-add-title">Create User Account</div>
+                <div class="user-add-subtitle">
+                    Fill in the details to add a new user to the system
+                </div>
+
+                <div th:if="${errorMsg}" class="user-add-error" th:text="${errorMsg}">
+                    Please correct the errors below.
+                </div>
+
+                <div th:if="${successMsg}" class="success-message" th:text="${successMsg}">
+                    User created successfully!
+                </div>
+
+                <form class="user-add-form" th:action="@{/admin/users}" th:object="${userForm}" method="post">
+                    <div class="form-group">
+                        <label for="name">Full Name <span style="color: red;">*</span></label>
+                        <input type="text" id="name" th:field="*{name}" placeholder="e.g. Jane Smith" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span style="color: red;">*</span></label>
+                        <input type="email" id="email" th:field="*{email}" placeholder="e.g. jane@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password <span style="color: red;">*</span></label>
+                        <input type="password" id="password" th:field="*{password}" placeholder="Enter a secure password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">User Role <span style="color: red;">*</span></label>
+                        <select id="role" th:field="*{role}">
+                            <option value="USER">User (Standard Access)</option>
+                            <option value="ADMIN">Admin (Full Access)</option>
+                        </select>
+                    </div>
+
+                    <div class="user-add-actions">
+                        <button type="submit" class="user-add-button">Create User</button>
+                        <a th:href="@{/admin}" class="user-add-cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

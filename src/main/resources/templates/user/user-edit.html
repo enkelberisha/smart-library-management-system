@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User - Admin Panel</title>
+
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+
+    <link rel="stylesheet" th:href="@{/css/user-edit.css}">
+</head>
+<body>
+<div class="user-edit-container">
+    <div class="user-edit-header">
+        <h2>Edit User</h2>
+        <p th:text="'Managing: ' + ${user.name}">Update user details and permissions</p>
+    </div>
+
+    <div class="user-edit-body">
+
+        <div th:if="${successMsg}" class="success-message" th:text="${successMsg}">
+            User updated successfully!
+        </div>
+        <div th:if="${errorMsg}" class="error-message" th:text="${errorMsg}">
+            Please correct the errors below.
+        </div>
+
+        <form th:action="@{/admin/users/{id}/edit(id=${user.id})}" th:object="${user}" method="post">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="e.g. John Doe" required>
+                <span th:if="${#fields.hasErrors('name')}" class="error-message" th:errors="*{name}">
+                        Name is required
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" th:field="*{email}" placeholder="e.g. john@example.com" required>
+                <span th:if="${#fields.hasErrors('email')}" class="error-message" th:errors="*{email}">
+                        Valid email is required
+                    </span>
+            </div>
+
+            <div class="form-group">
+                <label for="role">User Role</label>
+                <select id="role" th:field="*{role}" class="role-select">
+                    <option value="USER">User (Standard Access)</option>
+                    <option value="ADMIN">Admin (Full Access)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="auth-btn">Save Changes</button>
+        </form>
+
+        <form th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post"
+              onsubmit="return confirm('Are you sure you want to permanently delete this user?\nThis cannot be undone.');">
+            <button type="submit" class="delete-user-btn">Delete This User</button>
+        </form>
+
+        <div class="user-edit-footer">
+            <a th:href="@{/admin}">← Back to Admin Dashboard</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

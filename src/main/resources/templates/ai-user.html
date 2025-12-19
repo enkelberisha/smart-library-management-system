@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Query Agent - Admin</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/ai-query.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>AI Query Agent</h2>
+        <p>Ask natural language questions about users and books</p>
+    </div>
+
+    <div class="auth-body">
+        <div class="ai-query-wrapper">
+            <div class="ai-query-card">
+                <div class="ai-query-title">AI-Powered Search</div>
+                <div class="ai-query-subtitle">
+                    Ask questions like: "Show all fantasy books", "Who has the most books?", "List users with no books"
+                </div>
+
+                <form class="ai-query-form" th:action="@{/admin/ai-user}" method="post">
+                    <input type="text" name="q" class="ai-query-input"
+                           th:value="${q}"
+                           placeholder="e.g. Show all books by genre fantasy"
+                           required autofocus>
+                    <button type="submit" class="ai-query-button">Ask AI</button>
+                </form>
+
+                <div th:if="${error}" class="ai-query-error" th:text="${error}">
+                    Something went wrong. Please try again.
+                </div>
+
+                <div th:if="${answerText}" class="ai-query-answer" th:text="${answerText}">
+                    AI-generated response will appear here.
+                </div>
+
+                <table class="ai-query-table" th:if="${rows != null and !#lists.isEmpty(rows)}">
+                    <thead>
+                    <tr>
+                        <th th:each="column : ${columns}" th:text="${column}">Column</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="row : ${rows}">
+                        <td th:each="col, iter : ${columns}" th:text="${row[iter.index]}">Data</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <a class="ai-query-back" th:href="@{/admin}">← Back to Admin Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

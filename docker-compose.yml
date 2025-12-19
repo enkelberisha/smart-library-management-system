@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:17
+    container_name: smartlib-db
+    environment:
+      POSTGRES_DB: smartlib
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - smartlib_pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+
+  app:
+    env_file:
+      - .env
+    build: .
+    container_name: smartlib-app
+    ports:
+      - "8080:8080"
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: smartlib
+      DB_USER: postgres
+      DB_PASS: postgres
+
+    depends_on:
+      - db
+
+volumes:
+  smartlib_pgdata:

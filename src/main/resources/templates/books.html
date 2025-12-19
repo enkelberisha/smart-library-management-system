@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Books</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/books.css}">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>My Library</h2>
+        <p>Manage your personal book collection</p>
+        <a th:href="@{/logout}" class="btn logout logout-btn">Logout</a>
+    </div>
+
+    <div class="auth-body">
+<div style="display: flex">
+    <form th:action="@{/books}" method="get" style="margin: 12px 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <label for="genre" style="font-weight:600;">Genre:</label>
+
+        <select id="genre" name="genre" style="padding:10px; border-radius:10px;">
+            <option value="" th:selected="${selectedGenre == null or selectedGenre == ''}">All</option>
+
+            <option th:each="g : ${genres}"
+                    th:value="${g}"
+                    th:text="${g}"
+                    th:selected="${selectedGenre != null and selectedGenre == g}">
+                Genre
+            </option>
+        </select>
+
+        <button type="submit" class="add-book-btn" style="padding:10px 14px; border :1px solid transparent;">Apply</button>
+        <a th:href="@{/books}" class="add-book-btn" style="padding:10px 14px; text-decoration:none;">Reset</a>
+    </form>
+    <div class="card ai-suggestions-card">
+
+        <h3>AI Suggestions</h3>
+
+        <form method="post" action="/books/ai-suggestions">
+            <input type="hidden" name="genre" th:value="${selectedGenre}">
+            <button type="submit">Generate Suggestions</button>
+
+
+        </form>
+
+        <div th:if="${aiSuggestions != null}" style="margin-top:12px">
+            <p th:if="${#lists.isEmpty(aiSuggestions)}">No suggestions available.</p>
+
+            <ul th:if="${!#lists.isEmpty(aiSuggestions)}">
+                <li th:each="s : ${aiSuggestions}">
+                    <b th:text="${s.title()}">Title</b>
+                    <span> – </span>
+                    <span th:text="${s.reason()}">Reason</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+        <div class="books-wrapper">
+            <div class="page-header">
+                <div>
+                    <div class="page-title">My Books</div>
+                    <div class="page-subtitle">Track reading progress and manage your collection</div>
+                </div>
+                <a th:href="@{/books/new}" class="add-book-btn">+ Add New Book</a>
+            </div>
+
+
+            <div th:if="${books == null or books.isEmpty()}" class="empty-state">
+                <p>You haven't added any books yet.</p>
+
+            </div>
+
+
+            <table class="books-table" th:unless="${books == null or books.isEmpty()}">
+
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th>Genre</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td data-label="Title" th:text="${book.title}">The Great Gatsby</td>
+                    <td data-label="Author" th:text="${book.author}">F. Scott Fitzgerald</td>
+                    <td data-label="Genre" th:text="${book.genre}">Romance</td>
+                    <td data-label="Status"
+                        th:text="${#strings.capitalize(book.status.toLowerCase().replace('_',' '))}">
+                        Reading
+                    </td>
+
+                    <td data-label="Actions">
+                        <div class="action-buttons">
+                            <a th:href="@{/books/{id}/edit(id=${book.id})}" class="edit-btn">Edit</a>
+                            <form th:action="@{/books/{id}/delete(id=${book.id})}" method="post" style="display: inline;"
+                                  onsubmit="return confirm('Are you sure you want to delete this book?');">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

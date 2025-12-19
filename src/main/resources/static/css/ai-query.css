@@ -1,0 +1,127 @@
+.ai-query-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.ai-query-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.ai-query-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.ai-query-subtitle {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.ai-query-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.ai-query-input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9f9ff;
+    transition: border 0.3s ease;
+}
+
+.ai-query-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: white;
+}
+
+.ai-query-button {
+    padding: 14px 28px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.ai-query-button:hover {
+    background: #5a6fd8;
+}
+
+.ai-query-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid #f5c6cb;
+    font-weight: 500;
+}
+
+.ai-query-answer {
+    background: #f0f4ff;
+    padding: 18px;
+    border-radius: 8px;
+    margin: 20px 0;
+    line-height: 1.6;
+    color: #333;
+    border-left: 4px solid #667eea;
+}
+
+.ai-query-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #f9f9ff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ai-query-table th {
+    background: #667eea;
+    color: white;
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.ai-query-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    background: white;
+}
+
+.ai-query-table tr:hover td {
+    background: #f0f4ff;
+}
+
+.ai-query-back {
+    display: inline-block;
+    margin-top: 30px;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.ai-query-back:hover {
+    text-decoration: underline;
+}
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Add New Book - My Library</title>
+
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>Add New Book</h2>
+        <p>Grow your personal library collection</p>
+    </div>
+
+    <div class="auth-body">
+
+        <div th:if="${successMsg}" class="success-message" th:text="${successMsg}">Book successfully added!</div>
+        <div th:if="${errorMsg}" class="error-message" th:text="${errorMsg}">Please correct the errors below.</div>
+
+
+        <form th:action="@{/books/new}" th:object="${book}" method="post">
+
+            <div class="form-group">
+                <label for="title">Book Title <span style="color: red;">*</span></label>
+                <input type="text" id="title" th:field="*{title}" placeholder="e.g. 1984" required>
+                <span th:if="${#fields.hasErrors('title')}" class="error-message" th:errors="*{title}">Title is required</span>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author <span style="color: red;">*</span></label>
+                <input type="text" id="author" th:field="*{author}" placeholder="e.g. George Orwell" required>
+                <span th:if="${#fields.hasErrors('author')}" class="error-message" th:errors="*{author}">Author is required</span>
+            </div>
+
+            <div class="form-group">
+                <label for="genre">Genre</label>
+                <input type="text" id="genre" th:field="*{genre}" placeholder="e.g. Science Fiction, Mystery, Romance">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Reading Status</label>
+                <select id="status" th:field="*{status}">
+                    <option value="want_to_read">Want to Read</option>
+                    <option value="reading">Reading</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <button type="submit" class="auth-btn">Add Book to Library</button>
+        </form>
+
+        <div class="auth-footer">
+            <a th:href="@{/books}">← Back to My Books</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

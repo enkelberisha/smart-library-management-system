@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Users & Books</title>
+
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-header">
+        <h2>Admin Dashboard</h2>
+        <p>Manage users and books</p>
+    </div>
+    <a th:href="@{/admin/ai-user}" class="btn ai">AI Query Agent</a>
+    <a th:href="@{/logout}" class="btn logout logout-btn" style="border: white;">Logout</a>
+
+    <div class="auth-body">
+        <div class="admin-wrapper">
+
+            <div class="tables-container">
+
+                <div class="table-card">
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <div class="table-header">All Users
+                            <a th:href="@{/admin/users/new}" class="btn">
+                                + Add User
+                            </a></div>
+
+                    </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="user : ${users}"
+                            th:class="${'user-row' + ((selectedUser != null and selectedUser.id == user.id) ? ' selected' : '')}">
+
+                            <td>
+                                <a th:href="@{/admin(userId=${user.id}, mode='userBooks')}"
+                                   th:text="${user.id}"
+                                   style="text-decoration:none; color: inherit; font-weight: 600;">
+                                    1
+                                </a>
+                            </td>
+
+                            <td>
+                                <a th:href="@{/admin(userId=${user.id}, mode='userBooks')}"
+                                   th:text="${user.name}"
+                                   style="color: inherit; text-decoration: none; display:block; width:100%;">
+                                    John
+                                </a>
+                            </td>
+
+                            <td th:text="${user.email}">john@example.com</td>
+                            <td th:text="${user.role}">USER</td>
+
+                            <td style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <a class="btn small"
+                                   th:href="@{/admin(userId=${user.id}, mode='userBooks')}">
+                                    View books
+                                </a>
+
+                                <a class="btn small"
+                                   th:href="@{/admin/users/{id}/edit(id=${user.id})}">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${users == null or #lists.isEmpty(users)}">
+                            <td colspan="5" class="no-data">No users found</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-card">
+
+                    <div class="table-header" >
+                        <span th:text="${mode == 'allBooks' ? 'All Books' : 'Books'}">Books</span>
+                        <form th:action="@{/admin}" method="get"
+                              style="margin: 12px 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+
+                            <input type="hidden" name="mode" th:value="${mode}"/>
+
+                            <input type="hidden" name="userId"
+                                   th:if="${mode != 'allBooks' and selectedUser != null}"
+                                   th:value="${selectedUser.id}"/>
+
+                            <label for="genre" style="font-weight:600;">Genre:</label>
+
+                            <select id="genre" name="genre" style="padding:10px; border-radius:10px;">
+                                <option value="" th:selected="${selectedGenre == null or selectedGenre == ''}">All</option>
+
+                                <option th:each="g : ${genres}"
+                                        th:value="${g}"
+                                        th:text="${g}"
+                                        th:selected="${selectedGenre != null and selectedGenre == g}">
+                                    Genre
+                                </option>
+                            </select>
+
+                            <button type="submit" class="btn">Apply</button>
+
+                            <a class="btn"
+                               th:href="@{/admin(mode=${mode}, userId=${mode != 'allBooks' and selectedUser != null ? selectedUser.id : null})}">
+                                Reset
+                            </a>
+                        </form>
+
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <a class="btn"
+                               th:href="@{/admin(mode='userBooks', userId=${selectedUser != null ? selectedUser.id : null})}">
+                                Selected user's books
+                            </a>
+
+                            <a class="btn"
+                               th:href="@{/admin(mode='allBooks')}">
+                                View all books
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="selected-user-name" th:if="${mode != 'allBooks' and selectedUser != null}">
+                        Books of: <span th:text="${selectedUser.name}">John Doe</span>
+                        (ID: <span th:text="${selectedUser.id}">1</span>)
+                    </div>
+
+                    <div class="selected-user-name" th:if="${mode != 'allBooks' and selectedUser == null}">
+                        Click a user to load their books
+                    </div>
+
+                    <div class="selected-user-name" th:if="${mode == 'allBooks'}">
+                        Showing all books with their users
+                    </div>
+                    <form th:if="${mode == 'allBooks'}"
+                          th:action="@{/admin}" method="get"
+                          style="margin: 12px 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+
+
+
+
+                    </form>
+
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Genre</th>
+                            <th>Status</th>
+                            <th th:if="${mode == 'allBooks'}">User</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+
+                        <tbody th:if="${mode == 'allBooks'}">
+                        <tr th:each="book : ${allBooks}">
+                            <td th:text="${book.title}">1984</td>
+                            <td th:text="${book.author}">George Orwell</td>
+                            <td th:text="${book.genre}">Dystopian</td>
+                            <td th:text="${#strings.arrayJoin(#strings.capitalizeWords(#strings.replace(book.status.toLowerCase(), '_', ' ')).split(' '), ' ')}">
+                                Want To Read
+                            </td>
+
+                            <td th:if="${mode == 'allBooks'}"
+                                th:text="${book.userName != null ? book.userName : '—'}">
+                                John Doe
+                            </td>
+
+                            <td style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <a class="btn small"
+                                   th:href="@{/books/{id}/edit(id=${book.id})}">
+                                    Edit book
+                                </a>
+
+                                <a class="btn small"
+                                   th:if="${book.userId != null}"
+                                   th:href="@{/admin/users/{id}/edit(id=${book.userId})}">
+                                    Edit user
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${allBooks == null or #lists.isEmpty(allBooks)}">
+                            <td th:colspan="${mode == 'allBooks' ? 6 : 5}" class="no-data">No books found</td>
+                        </tr>
+                        </tbody>
+
+                        <tbody th:if="${mode != 'allBooks' and books != null}">
+                        <tr th:each="book : ${books}">
+                            <td th:text="${book.title}">1984</td>
+                            <td th:text="${book.author}">George Orwell</td>
+                            <td th:text="${book.genre}">Dystopian</td>
+                            <td th:text="${#strings.arrayJoin(#strings.capitalizeWords(#strings.replace(book.status.toLowerCase(), '_', ' ')).split(' '), ' ')}">
+                                Want To Read
+                            </td>
+
+                            <td style="display:flex; gap:8px; flex-wrap:wrap;">
+                                <a class="btn small"
+                                   th:href="@{/books/{id}/edit(id=${book.id})}">
+                                    Edit book
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(books)}">
+                            <td colspan="5" class="no-data">This user has no books</td>
+                        </tr>
+                        </tbody>
+
+                        <tbody th:if="${mode != 'allBooks' and books == null}">
+                        <tr>
+                            <td colspan="5" class="no-data">Select a user to view books</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

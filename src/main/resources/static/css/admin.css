@@ -1,0 +1,160 @@
+.admin-wrapper {
+    width: 100%;
+    max-width: 2500px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+
+.tables-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.table-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    background: #667eea;
+    color: white;
+    padding: 16px 20px;
+    font-weight: 600;
+    font-size: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f8f9ff;
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background: #f8f9ff;
+}
+
+tr.user-row {
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+tr.user-row:hover {
+    background: #e8f0ff;
+}
+
+tr.user-row.selected {
+    background: #d0e3ff;
+    font-weight: 500;
+}
+
+.no-data {
+    text-align: center;
+    padding: 50px 20px;
+    color: #888;
+    font-style: italic;
+    font-size: 16px;
+}
+
+.selected-user-name {
+    padding: 16px 20px;
+    font-weight: 500;
+    color: #555;
+    background: #f9f9ff;
+    border-bottom: 1px solid #eee;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border :1px solid white;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+
+.btn:hover {
+    background: #5a6fd8;
+}
+
+.btn.small {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.btn.danger {
+    background: #dc3545;
+}
+
+.btn.danger:hover {
+    background: #c82333;
+}
+
+.filter-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 12px 20px;
+}
+
+.filter-form select,
+.filter-form label {
+    font-size: 14px;
+}
+
+.filter-form select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.btn.logout {
+    background: #e74c3c;
+}
+
+.btn.logout:hover {
+    background: #c0392b;
+}
+
+.ai {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    border:transparent;
+}
+
+

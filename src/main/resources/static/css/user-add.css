@@ -1,0 +1,118 @@
+.user-add-wrapper {
+    width: 100%;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.user-add-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.user-add-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.user-add-subtitle {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.user-add-form .form-group {
+    margin-bottom: 20px;
+}
+
+.user-add-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.user-add-form input,
+.user-add-form select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9f9ff;
+    transition: border 0.3s ease;
+}
+
+.user-add-form input:focus,
+.user-add-form select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: white;
+}
+
+.user-add-button {
+    padding: 14px 28px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-right: 12px;
+}
+
+.user-add-button:hover {
+    background: #5a6fd8;
+}
+
+.user-add-cancel {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #f8f9ff;
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    transition: background 0.3s ease;
+}
+
+.user-add-cancel:hover {
+    background: #e8f0ff;
+}
+
+.user-add-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.user-add-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid #f5c6cb;
+    font-weight: 500;
+}
+.success-message {
+    background: lightgreen;
+    color: green;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid lightgreen;
+    font-weight: 500;
+}
